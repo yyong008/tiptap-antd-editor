@@ -27,7 +27,7 @@ import { useCallback } from "react";
 
 export function Toolbar({ editor }: { editor: Editor | null }) {
   return (
-    <div className="flex items-center gap-3 px-[10px] py-[4px] border-b">
+    <div className="flex flex-wrap items-center gap-3 px-[10px] py-[4px] border-b">
       <div className="flex border-r pr-[10px]">
         <div
           className=" p-[4px] cursor-pointer"
