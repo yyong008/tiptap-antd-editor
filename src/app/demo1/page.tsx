@@ -1,3 +1,5 @@
+"use client"
+
 import Tiptap from "@/components/tiptap";
 import { useState } from "react";
 
