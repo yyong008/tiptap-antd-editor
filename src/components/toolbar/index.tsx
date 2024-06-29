@@ -375,7 +375,7 @@ function FontManager({ editor }: { editor: Editor | null }) {
 }
 
 // todo list
-function TodoList({ editor }) {
+function TodoList({ editor }: any) {
   return (
     <div className="flex">
       <div
