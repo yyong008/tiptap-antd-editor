@@ -21,7 +21,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import { Toolbar } from "../toolbar";
 import Underline from "@tiptap/extension-underline";
 
-const Tiptap = ({ value: content, onChange }) => {
+const Tiptap = ({ value: content, onChange }: any) => {
   const editor = useEditor({
     extensions: [
       HorizontalRule,
