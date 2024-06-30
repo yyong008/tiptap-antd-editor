@@ -14,6 +14,7 @@ import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
 import Paragraph from "@tiptap/extension-paragraph";
 import Placeholder from "@tiptap/extension-placeholder";
+import {SlashMenu} from "./slash-menu";
 import StarterKit from "@tiptap/starter-kit";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
@@ -66,6 +67,7 @@ const Tiptap = ({ value: content, onChange }: any) => {
     <div>
       <Toolbar editor={editor} />
       <EditorBubbleMenu editor={editor} />
+      <SlashMenu editor={editor} />
       <EditorContent
         className="h-[200px] p-[10px] overflow-auto"
         editor={editor}
