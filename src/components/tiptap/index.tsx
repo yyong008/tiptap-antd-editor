@@ -10,6 +10,7 @@ import { CustomTableCell } from "./table";
 import Document from "@tiptap/extension-document";
 import { EditorBubbleMenu } from "./bubble-menu";
 import Heading from "@tiptap/extension-heading";
+import Highlight from '@tiptap/extension-highlight'
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
@@ -27,6 +28,7 @@ import Text from "@tiptap/extension-text";
 import TextAlign from "@tiptap/extension-text-align";
 import TextStyle from "@tiptap/extension-text-style";
 import { Toolbar } from "../toolbar";
+import Typography from '@tiptap/extension-typography'
 import Underline from "@tiptap/extension-underline";
 
 const Tiptap = ({ value: content, onChange }: any) => {
@@ -37,6 +39,8 @@ const Tiptap = ({ value: content, onChange }: any) => {
       Document,
       Paragraph,
       Text,
+      Typography,
+      Highlight,
       Image,
       TextStyle,
       Blockquote,
