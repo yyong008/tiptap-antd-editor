@@ -20,10 +20,11 @@ import TextAlign from "@tiptap/extension-text-align";
 import TextStyle from "@tiptap/extension-text-style";
 import { Toolbar } from "../toolbar";
 import Underline from "@tiptap/extension-underline";
-
+import { Color } from '@tiptap/extension-color'
 const Tiptap = ({ value: content, onChange }: any) => {
   const editor = useEditor({
     extensions: [
+      Color,
       HorizontalRule,
       Document,
       Paragraph,

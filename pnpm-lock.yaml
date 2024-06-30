@@ -14,6 +14,9 @@ importers:
       '@tiptap/extension-blockquote':
         specifier: ^2.4.0
         version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-color':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/extension-text-style@2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0)))
       '@tiptap/extension-document':
         specifier: ^2.4.0
         version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
@@ -382,6 +385,12 @@ packages:
     resolution: {integrity: sha512-wjhBukuiyJMq4cTcK3RBTzUPV24k5n1eEPlpmzku6ThwwkMdwynnMGMAmSF3fErh3AOyOUPoTTjgMYN2d10SJA==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
+
+  '@tiptap/extension-color@2.4.0':
+    resolution: {integrity: sha512-aVuqGtzTIZO93niADdu+Hx8g03X0pS7wjrJcCcYkkDEbC/siC03zlxKZIYBW1Jiabe99Z7/s2KdtLoK6DW2A2g==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+      '@tiptap/extension-text-style': ^2.0.0
 
   '@tiptap/extension-document@2.4.0':
     resolution: {integrity: sha512-3jRodQJZDGbXlRPERaloS+IERg/VwzpC1IO6YSJR9jVIsBO6xC29P3cKTQlg1XO7p6ZH/0ksK73VC5BzzTwoHg==}
@@ -2505,6 +2514,11 @@ snapshots:
     dependencies:
       '@tiptap/core': 2.4.0(@tiptap/pm@2.4.0)
 
+  '@tiptap/extension-color@2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/extension-text-style@2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0)))':
+    dependencies:
+      '@tiptap/core': 2.4.0(@tiptap/pm@2.4.0)
+      '@tiptap/extension-text-style': 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+
   '@tiptap/extension-document@2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))':
     dependencies:
       '@tiptap/core': 2.4.0(@tiptap/pm@2.4.0)
@@ -3196,7 +3210,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.9.0(eslint@8.57.0)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
@@ -3220,7 +3234,7 @@ snapshots:
       enhanced-resolve: 5.17.0
       eslint: 8.57.0
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.5
       is-core-module: 2.14.0
@@ -3242,7 +3256,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.57.0)(typescript@5.5.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5

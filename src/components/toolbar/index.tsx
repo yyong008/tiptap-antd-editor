@@ -20,7 +20,7 @@ import {
   UndoOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
+import { ColorPicker, Dropdown, Space } from "antd";
 
 import { Editor } from "@tiptap/react";
 import { useCallback } from "react";
@@ -113,6 +113,7 @@ export function Toolbar({ editor }: { editor: Editor | null }) {
       <Link editor={editor} />
       <AddImage editor={editor} />
       <Line editor={editor} />
+      <Color editor={editor} />
     </div>
   );
 }
@@ -375,6 +376,7 @@ function FontManager({ editor }: { editor: Editor | null }) {
 }
 
 // todo list
+
 function TodoList({ editor }: any) {
   return (
     <div className="flex">
@@ -409,14 +411,33 @@ function AddImage({ editor }: { editor: Editor | null }) {
 }
 
 function Video({ editor }: { editor: Editor | null }) {
-  return <div>
-    <PlayCircleOutlined />
-  </div>
+  return (
+    <div>
+      <PlayCircleOutlined />
+    </div>
+  );
 }
 
-
 function Line({ editor }: { editor: Editor | null }) {
-  return <div onClick={() => editor?.chain().focus().setHorizontalRule().run()} className=" p-[4px] cursor-pointer">
-    <BorderVerticleOutlined />
-  </div>
+  return (
+    <div
+      onClick={() => editor?.chain().focus().setHorizontalRule().run()}
+      className=" p-[4px] cursor-pointer"
+    >
+      <BorderVerticleOutlined />
+    </div>
+  );
+}
+
+function Color({ editor }: { editor: Editor | null }) {
+  return (
+    <div>
+      <ColorPicker
+        size="small"
+        onChange={(color) => {
+          editor?.chain().focus().setColor("#" +color.toHex()).run();
+        }}
+      />
+    </div>
+  );
 }
