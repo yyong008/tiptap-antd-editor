@@ -6,6 +6,7 @@ import { EditorContent, useEditor } from "@tiptap/react";
 
 import Blockquote from "@tiptap/extension-blockquote";
 import { Color } from '@tiptap/extension-color'
+import { CustomTableCell } from "./table";
 import Document from "@tiptap/extension-document";
 import { EditorBubbleMenu } from "./bubble-menu";
 import Heading from "@tiptap/extension-heading";
@@ -16,6 +17,10 @@ import Paragraph from "@tiptap/extension-paragraph";
 import Placeholder from "@tiptap/extension-placeholder";
 import {SlashMenu} from "./slash-menu";
 import StarterKit from "@tiptap/starter-kit";
+import Table from "@tiptap/extension-table";
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TableRow from '@tiptap/extension-table-row'
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import Text from "@tiptap/extension-text";
@@ -55,6 +60,15 @@ const Tiptap = ({ value: content, onChange }: any) => {
       Placeholder.configure({
         emptyEditorClass: "is-editor-empty",
       }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      // Default TableCell
+      // TableCell,
+      // Custom TableCell with backgroundColor attribute
+      CustomTableCell,
     ],
     content,
     onUpdate({ editor }) {

@@ -23,6 +23,7 @@ import {
 import { ColorPicker, Dropdown, Space } from "antd";
 
 import { Editor } from "@tiptap/react";
+import { EditorTable } from "../tiptap/table";
 import { useCallback } from "react";
 
 export function Toolbar({ editor }: { editor: Editor | null }) {
@@ -114,6 +115,7 @@ export function Toolbar({ editor }: { editor: Editor | null }) {
       <AddImage editor={editor} />
       <Line editor={editor} />
       <Color editor={editor} />
+      <EditorTable editor={editor} />
     </div>
   );
 }
