@@ -1,26 +1,36 @@
-/* Floating menu */
 .floating-menu {
   display: flex;
-  background-color: var(--gray-3);
-  padding: 0.1rem;
-  border-radius: 0.5rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  gap: 4px;
+  z-index: 50;
+}
 
-  button {
-    /* background-color: unset; */
-    padding: 0.275rem 0.425rem;
-    border-radius: 0.3rem;
+.floating-menu button {
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: #4b5563;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
 
-    &:hover {
-      background-color: var(--gray-3);
-    }
+.floating-menu button:hover {
+  background: #f3f4f6;
+  color: #1f2937;
+}
 
-    &.is-active {
-      background-color: var(--white);
-      color: var(--purple);
+.floating-menu button.is-active {
+  background: #3b82f6;
+  color: #ffffff;
+}
 
-      &:hover {
-        color: var(--purple-contrast);
-      }
-    }
-  }
+.floating-menu button.is-active:hover {
+  background: #2563eb;
 }

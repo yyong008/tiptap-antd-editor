@@ -1,6 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-foreground-rgb: 0, 0, 0;
+  --color-background-start-rgb: 214, 219, 220;
+  --color-background-end-rgb: 255, 255, 255;
+  --gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --gradient-conic: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -26,8 +32,6 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+@utility text-balance {
+  text-wrap: balance;
 }

@@ -6,15 +6,11 @@ import {
   BorderVerticleOutlined,
   CheckSquareOutlined,
   FontColorsOutlined,
-  FontSizeOutlined,
   ItalicOutlined,
-  LeftOutlined,
   LinkOutlined,
   OrderedListOutlined,
   PictureOutlined,
-  PlayCircleOutlined,
   RedoOutlined,
-  RightOutlined,
   StrikethroughOutlined,
   UnderlineOutlined,
   UndoOutlined,
@@ -25,95 +21,156 @@ import { ColorPicker, Dropdown, Space } from "antd";
 import { Editor } from "@tiptap/react";
 import { EditorTable } from "../tiptap/table";
 import { useCallback } from "react";
+import styles from "./index.module.css";
 
 export function Toolbar({ editor }: { editor: Editor | null }) {
   return (
-    <div className="flex flex-wrap items-center gap-3 px-[10px] py-[4px] border-b">
-      <div className="flex border-r pr-[10px]">
-        <div
-          className=" p-[4px] cursor-pointer"
-          onClick={() => {
-            editor?.chain().undo().focus().run();
-          }}
+    <div className={styles.toolbar}>
+      <div className={styles.group}>
+        <button
+          onClick={() => editor?.chain().undo().focus().run()}
+          disabled={!editor?.can().undo()}
+          className={styles.btn}
+          title="撤销"
         >
           <UndoOutlined />
-        </div>
-        <div
-          className=" p-[4px] cursor-pointer"
-          onClick={() => {
-            editor?.chain().redo().focus().run();
-          }}
+        </button>
+        <button
+          onClick={() => editor?.chain().redo().focus().run()}
+          disabled={!editor?.can().redo()}
+          className={styles.btn}
+          title="重做"
         >
           <RedoOutlined />
-        </div>
+        </button>
       </div>
-      <div
-        className=" p-[4px] cursor-pointer"
-        onClick={() => {
-          editor?.chain().toggleBlockquote().focus().run();
-        }}
-      >
-        引用
+
+      <div className={styles.divider} />
+
+      <div className={styles.group}>
+        <button
+          onClick={() => editor?.chain().toggleBlockquote().focus().run()}
+          className={`${styles.btn} ${editor?.isActive("blockquote") ? styles.active : ""}`}
+          title="引用"
+        >
+          引用
+        </button>
       </div>
-      <div className="flex gap-3 border-r pr-[10px] cursor-pointer">
+
+      <div className={styles.divider} />
+
+      <div className={styles.group}>
         <Headering editor={editor} />
       </div>
 
-      <div
-        onClick={() => {
-          editor?.chain().toggleBold().focus().run();
-        }}
-        className=" p-[4px] cursor-pointer"
-      >
-        <BoldOutlined />
+      <div className={styles.divider} />
+
+      <div className={styles.group}>
+        <button
+          onClick={() => editor?.chain().toggleBold().focus().run()}
+          className={`${styles.btn} ${editor?.isActive("bold") ? styles.active : ""}`}
+          title="粗体"
+        >
+          <BoldOutlined />
+        </button>
+        <button
+          onClick={() => editor?.chain().toggleItalic().focus().run()}
+          className={`${styles.btn} ${editor?.isActive("italic") ? styles.active : ""}`}
+          title="斜体"
+        >
+          <ItalicOutlined />
+        </button>
+        <button
+          onClick={() => editor?.chain().toggleStrike().focus().run()}
+          className={`${styles.btn} ${editor?.isActive("strike") ? styles.active : ""}`}
+          title="删除线"
+        >
+          <StrikethroughOutlined />
+        </button>
+        <button
+          onClick={() => editor?.chain().toggleUnderline().focus().run()}
+          className={`${styles.btn} ${editor?.isActive("underline") ? styles.active : ""}`}
+          title="下划线"
+        >
+          <UnderlineOutlined />
+        </button>
       </div>
-      <div
-        onClick={() => {
-          editor?.chain().toggleItalic().focus().run();
-        }}
-        className=" p-[4px] cursor-pointer"
-      >
-        <ItalicOutlined />
+
+      <div className={styles.divider} />
+
+      <div className={styles.group}>
+        <button
+          onClick={() => editor?.chain().toggleCode().focus().run()}
+          className={`${styles.btn} ${editor?.isActive("code") ? styles.active : ""}`}
+          title="行内代码"
+        >
+          行内
+        </button>
+        <button
+          onClick={() => editor?.chain().toggleCodeBlock().focus().run()}
+          className={`${styles.btn} ${editor?.isActive("codeBlock") ? styles.active : ""}`}
+          title="代码块"
+        >
+          代码块
+        </button>
       </div>
-      <div
-        onClick={() => {
-          editor?.chain().toggleStrike().focus().run();
-        }}
-        className=" p-[4px] cursor-pointer"
-      >
-        <StrikethroughOutlined />
-      </div>
-      <div
-        onClick={() => {
-          editor?.chain().toggleUnderline().focus().run();
-        }}
-        className=" p-[4px] cursor-pointer"
-      >
-        <UnderlineOutlined />
-      </div>
-      <div
-        onClick={() => {
-          editor?.chain().toggleCode().focus().run();
-        }}
-        className=" p-[4px] cursor-pointer"
-      >
-        行内块
-      </div>
-      <div
-        onClick={() => {
-          editor?.chain().toggleCodeBlock().focus().run();
-        }}
-        className=" p-[4px] cursor-pointer"
-      >
-        块
-      </div>
+
+      <div className={styles.divider} />
+
       <List editor={editor} />
+
+      <div className={styles.divider} />
+
       <Aglin editor={editor} />
-      {/* <FontManager editor={editor} /> */}
-      <TodoList editor={editor} />
-      <Link editor={editor} />
-      <AddImage editor={editor} />
-      <Line editor={editor} />
+
+      <div className={styles.divider} />
+
+      <button
+        onClick={() => editor?.chain().focus().toggleTaskList().run()}
+        className={`${styles.btn} ${editor?.isActive("taskList") ? styles.active : ""}`}
+        title="任务列表"
+      >
+        <CheckSquareOutlined />
+      </button>
+
+      <button
+        onClick={() => {
+          const previousUrl = editor?.getAttributes("link").href;
+          const url = window.prompt("URL", previousUrl);
+          if (url === null) return;
+          if (url === "") {
+            editor?.chain().focus().extendMarkRange("link").unsetLink().run();
+            return;
+          }
+          editor?.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+        }}
+        className={`${styles.btn} ${editor?.isActive("link") ? styles.active : ""}`}
+        title="链接"
+      >
+        <LinkOutlined />
+      </button>
+
+      <button
+        onClick={() => {
+          const url = window.prompt("图片 URL");
+          if (url) {
+            editor?.chain().focus().setImage({ src: url }).run();
+          }
+        }}
+        className={styles.btn}
+        title="插入图片"
+      >
+        <PictureOutlined />
+      </button>
+
+      <button
+        onClick={() => editor?.chain().focus().setHorizontalRule().run()}
+        className={styles.btn}
+        title="分隔线"
+      >
+        <BorderVerticleOutlined />
+      </button>
+
       <Color editor={editor} />
       <EditorTable editor={editor} />
     </div>
@@ -125,17 +182,7 @@ function Headering({ editor }: { editor: Editor | null }) {
     {
       key: "H1",
       label: (
-        <div
-          onClick={() =>
-            editor
-              ?.chain()
-              .focus()
-              .toggleHeading({
-                level: 1,
-              })
-              .run()
-          }
-        >
+        <div onClick={() => editor?.chain().focus().toggleHeading({ level: 1 }).run()}>
           H1
         </div>
       ),
@@ -143,17 +190,7 @@ function Headering({ editor }: { editor: Editor | null }) {
     {
       key: "H2",
       label: (
-        <div
-          onClick={() =>
-            editor
-              ?.chain()
-              .toggleHeading({
-                level: 2,
-              })
-              .focus()
-              .run()
-          }
-        >
+        <div onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}>
           H2
         </div>
       ),
@@ -161,17 +198,7 @@ function Headering({ editor }: { editor: Editor | null }) {
     {
       key: "H3",
       label: (
-        <div
-          onClick={() =>
-            editor
-              ?.chain()
-              .toggleHeading({
-                level: 3,
-              })
-              .focus()
-              .run()
-          }
-        >
+        <div onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}>
           H3
         </div>
       ),
@@ -179,17 +206,7 @@ function Headering({ editor }: { editor: Editor | null }) {
     {
       key: "H4",
       label: (
-        <div
-          onClick={() =>
-            editor
-              ?.chain()
-              .toggleHeading({
-                level: 4,
-              })
-              .focus()
-              .run()
-          }
-        >
+        <div onClick={() => editor?.chain().focus().toggleHeading({ level: 4 }).run()}>
           H4
         </div>
       ),
@@ -197,17 +214,7 @@ function Headering({ editor }: { editor: Editor | null }) {
     {
       key: "H5",
       label: (
-        <div
-          onClick={() =>
-            editor
-              ?.chain()
-              .toggleHeading({
-                level: 5,
-              })
-              .focus()
-              .run()
-          }
-        >
+        <div onClick={() => editor?.chain().focus().toggleHeading({ level: 5 }).run()}>
           H5
         </div>
       ),
@@ -215,231 +222,95 @@ function Headering({ editor }: { editor: Editor | null }) {
     {
       key: "H6",
       label: (
-        <div
-          onClick={() =>
-            editor
-              ?.chain()
-              .toggleHeading({
-                level: 6,
-              })
-              .focus()
-              .run()
-          }
-        >
+        <div onClick={() => editor?.chain().focus().toggleHeading({ level: 6 }).run()}>
           H6
         </div>
       ),
     },
     {
       key: "Text",
-      label: <div>Text</div>,
+      label: <div onClick={() => editor?.chain().focus().setParagraph().run()}>正文</div>,
     },
   ];
+
+  const getCurrentLabel = () => {
+    if (editor?.isActive("heading", { level: 1 })) return "H1";
+    if (editor?.isActive("heading", { level: 2 })) return "H2";
+    if (editor?.isActive("heading", { level: 3 })) return "H3";
+    if (editor?.isActive("heading", { level: 4 })) return "H4";
+    if (editor?.isActive("heading", { level: 5 })) return "H5";
+    if (editor?.isActive("heading", { level: 6 })) return "H6";
+    return "标题";
+  };
+
   return (
-    <Dropdown menu={{ items }}>
-      <Space>
-        标题
-        {/* <DownOutlined /> */}
-      </Space>
+    <Dropdown menu={{ items }} trigger={["click"]}>
+      <button className={`${styles.btn} ${editor?.isActive("heading") ? styles.active : ""}`}>
+        <Space>
+          {getCurrentLabel()}
+        </Space>
+      </button>
     </Dropdown>
-  );
-}
-
-function Block({ children, onClick }: any) {
-  return (
-    <div onClick={onClick}>
-      <div>{children}</div>
-    </div>
-  );
-}
-
-function CodeBlock() {
-  return (
-    <div className="flex cursor-pointer">
-      <LeftOutlined />
-      <RightOutlined />
-    </div>
   );
 }
 
 function List({ editor }: { editor: Editor | null }) {
   return (
-    <div className="flex">
-      <div
-        onClick={() => {
-          editor?.chain().toggleCodeBlock().focus().run();
-        }}
-        className=" p-[4px] cursor-pointer"
+    <div className={styles.group}>
+      <button
+        onClick={() => editor?.chain().focus().toggleOrderedList().run()}
+        className={`${styles.btn} ${editor?.isActive("orderedList") ? styles.active : ""}`}
+        title="有序列表"
       >
         <OrderedListOutlined />
-      </div>
-
-      <div
-        onClick={() => {
-          editor?.chain().toggleCodeBlock().focus().run();
-        }}
-        className=" p-[4px] cursor-pointer"
+      </button>
+      <button
+        onClick={() => editor?.chain().focus().toggleBulletList().run()}
+        className={`${styles.btn} ${editor?.isActive("bulletList") ? styles.active : ""}`}
+        title="无序列表"
       >
         <UnorderedListOutlined />
-      </div>
+      </button>
     </div>
   );
 }
 
-// 对齐
 function Aglin({ editor }: { editor: Editor | null }) {
   return (
-    <div className="flex">
-      <div
-        onClick={() => {
-          editor?.chain().focus().setTextAlign("left").run();
-        }}
-        className=" p-[4px] cursor-pointer"
+    <div className={styles.group}>
+      <button
+        onClick={() => editor?.chain().focus().setTextAlign("left").run()}
+        className={`${styles.btn} ${editor?.isActive({ textAlign: "left" }) ? styles.active : ""}`}
+        title="左对齐"
       >
         <AlignLeftOutlined />
-      </div>
-      <div
-        onClick={() => {
-          editor?.chain().focus().setTextAlign("center").run();
-        }}
-        className=" p-[4px] cursor-pointer"
+      </button>
+      <button
+        onClick={() => editor?.chain().focus().setTextAlign("center").run()}
+        className={`${styles.btn} ${editor?.isActive({ textAlign: "center" }) ? styles.active : ""}`}
+        title="居中"
       >
         <AlignCenterOutlined />
-      </div>
-      <div
-        onClick={() => {
-          editor?.chain().focus().setTextAlign("right").run();
-        }}
-        className=" p-[4px] cursor-pointer"
+      </button>
+      <button
+        onClick={() => editor?.chain().focus().setTextAlign("right").run()}
+        className={`${styles.btn} ${editor?.isActive({ textAlign: "right" }) ? styles.active : ""}`}
+        title="右对齐"
       >
         <AlignRightOutlined />
-      </div>
-    </div>
-  );
-}
-
-// 缩进
-
-// 链接
-function Link({ editor }: { editor: Editor | null }) {
-  const setLink = useCallback(() => {
-    const previousUrl = editor?.getAttributes("link").href;
-    const url = window.prompt("URL", previousUrl);
-
-    // cancelled
-    if (url === null) {
-      return;
-    }
-
-    // empty
-    if (url === "") {
-      editor?.chain().focus().extendMarkRange("link").unsetLink().run();
-
-      return;
-    }
-
-    // update link
-    editor
-      ?.chain()
-      .focus()
-      .extendMarkRange("link")
-      .setLink({ href: url })
-      .run();
-  }, [editor]);
-  return (
-    <div onClick={setLink} className=" p-[4px] cursor-pointer">
-      <LinkOutlined />
-    </div>
-  );
-}
-
-// 字体
-function FontManager({ editor }: { editor: Editor | null }) {
-  return (
-    <div className="flex">
-      <div
-        onClick={() => {
-          editor?.chain().focus().setTextAlign("right").run();
-        }}
-        className=" p-[4px] cursor-pointer"
-      >
-        <FontColorsOutlined />
-      </div>
-      <div
-        onClick={() => {
-          editor?.chain().focus().setTextAlign("right").run();
-        }}
-        className=" p-[4px] cursor-pointer"
-      >
-        <FontSizeOutlined />
-      </div>
-    </div>
-  );
-}
-
-// todo list
-
-function TodoList({ editor }: any) {
-  return (
-    <div className="flex">
-      <div
-        onClick={() => {
-          editor?.chain().focus().toggleTaskList().run();
-        }}
-        className=" p-[4px] cursor-pointer"
-      >
-        <CheckSquareOutlined />
-      </div>
-    </div>
-  );
-}
-
-function AddImage({ editor }: { editor: Editor | null }) {
-  const addImage = useCallback(() => {
-    const url = window.prompt("URL");
-
-    if (url) {
-      editor?.chain().focus().setImage({ src: url }).run();
-    }
-  }, [editor]);
-
-  return (
-    <div className="flex">
-      <div onClick={addImage} className=" p-[4px] cursor-pointer">
-        <PictureOutlined />
-      </div>
-    </div>
-  );
-}
-
-function Video({ editor }: { editor: Editor | null }) {
-  return (
-    <div>
-      <PlayCircleOutlined />
-    </div>
-  );
-}
-
-function Line({ editor }: { editor: Editor | null }) {
-  return (
-    <div
-      onClick={() => editor?.chain().focus().setHorizontalRule().run()}
-      className=" p-[4px] cursor-pointer"
-    >
-      <BorderVerticleOutlined />
+      </button>
     </div>
   );
 }
 
 function Color({ editor }: { editor: Editor | null }) {
   return (
-    <div>
-      <ColorPicker
-        size="small"
-        onChange={(color) => {
-          editor?.chain().focus().setColor("#" +color.toHex()).run();
-        }}
-      />
-    </div>
+    <ColorPicker
+      size="small"
+      showText
+      onChange={(color) => {
+        editor?.chain().focus().setColor("#" + color.toHex()).run();
+      }}
+    />
   );
 }

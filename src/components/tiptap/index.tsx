@@ -18,7 +18,7 @@ import Paragraph from "@tiptap/extension-paragraph";
 import Placeholder from "@tiptap/extension-placeholder";
 import {SlashMenu} from "./slash-menu";
 import StarterKit from "@tiptap/starter-kit";
-import Table from "@tiptap/extension-table";
+import { Table } from "@tiptap/extension-table";
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
@@ -26,33 +26,29 @@ import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import Text from "@tiptap/extension-text";
 import TextAlign from "@tiptap/extension-text-align";
-import TextStyle from "@tiptap/extension-text-style";
+import { TextStyle } from "@tiptap/extension-text-style";
 import { Toolbar } from "../toolbar";
 import Typography from '@tiptap/extension-typography'
 import Underline from "@tiptap/extension-underline";
 
 const Tiptap = ({ value: content, onChange }: any) => {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
+      StarterKit.configure({
+        heading: {
+          levels: [1, 2, 3, 4, 5, 6],
+        },
+      }),
       Color,
-      HorizontalRule,
-      Document,
-      Paragraph,
-      Text,
       Typography,
       Highlight,
       Image,
       TextStyle,
-      Blockquote,
-      Underline,
-      Heading.configure({
-        levels: [1, 2, 3, 4, 5, 6],
-      }),
       TaskList,
       TaskItem.configure({
         nested: true,
       }),
-      StarterKit,
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
@@ -69,9 +65,6 @@ const Tiptap = ({ value: content, onChange }: any) => {
       }),
       TableRow,
       TableHeader,
-      // Default TableCell
-      // TableCell,
-      // Custom TableCell with backgroundColor attribute
       CustomTableCell,
     ],
     content,
@@ -82,16 +75,13 @@ const Tiptap = ({ value: content, onChange }: any) => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col h-full overflow-visible">
       <Toolbar editor={editor} />
       <EditorBubbleMenu editor={editor} />
       <SlashMenu editor={editor} />
       <EditorContent
-        className="h-[200px] p-[10px] overflow-auto"
         editor={editor}
-        onChange={(v) => {
-          debugger
-        }}
+        className="tiptap-editor flex-1 overflow-auto p-4 focus:outline-none"
       />
     </div>
   );
